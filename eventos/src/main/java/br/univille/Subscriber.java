@@ -12,7 +12,7 @@ public class Subscriber {
         
         String chave = System.getenv("CHAVE");
 
-        String subscription = "subscription-waltercoan";
+        String subscription = "subscription-lucasalmeida";
 
         ServiceBusProcessorClient processorClient =
             new ServiceBusClientBuilder()
@@ -30,7 +30,7 @@ public class Subscriber {
                 context.complete();
             })
             .processError(context -> {
-                System.out.println("Deu ruim");
+                System.out.println("F");
             })
             .buildProcessorClient();
         
