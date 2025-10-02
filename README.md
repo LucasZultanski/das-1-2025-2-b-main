@@ -189,6 +189,7 @@ A aula iniciou com a revisão dos conceitos de **alta coesão** e **baixo acopla
 ### Introdução ao SOLID
 * SOLID é um acrônimo para cinco princípios de design para software orientado a objetos, popularizados por **Robert Martin (Uncle Bob)**.
 * Seguir estes princípios ajuda a criar um código mais limpo, manutenível e flexível. Em resumo, é "programar orientado a objetos do jeito certo".
+<img width="1024" height="416" alt="image" src="https://github.com/user-attachments/assets/039aad8c-0202-453a-b008-ad956c918147" />
 
 ---
 
