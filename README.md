@@ -422,7 +422,8 @@ A aula abordou as expectativas sobre o papel do arquiteto de software e introduz
     * **Feedback:** Coletar informações para o próximo ciclo de planejamento.
 
     [Introdução a DevOps](https://learn.microsoft.com/pt-br/training/modules/introduction-to-devops/2-what-is-devops?ns-enrollment-type=learningpath&ns-enrollment-id=learn.wwl.az-400-work-git-for-enterprise-devops)
-<img width="464" height="240" alt="image" src="https://github.com/user-attachments/assets/3aad5cea-c9e3-4623-a997-591a67846edd" />
+<img width="464" height="240" alt="image" src="https://github.com/user-attachments/assets/433193dc-3cb0-4298-97cc-4548e849a65e" />
+
 
 # Aula 11 - 04/09/2025
 [Fundamentos da Arquitetura de Software - Pensamento Arquitetônico](https://integrada.minhabiblioteca.com.br/reader/books/9788550819754/epubcfi/6/22%5B%3Bvnd.vst.idref%3Dcap2.xhtml%5D!/4)
