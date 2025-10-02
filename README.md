@@ -313,8 +313,7 @@ Esta aula consistiu em uma revisão prática e aprofundada do padrão **Singleto
 ### Revisão e Analogia do Padrão Singleton
 * **Objetivo Principal:** Garantir que uma classe possua apenas **uma instância** em toda a aplicação.
 * **Analogia "Ender Chest":** O Singleton foi comparado a um "Ender Chest" do Minecraft. 
-<img width="360" height="360" alt="image" src="https://github.com/user-attachments/assets/196070f2-789a-4341-8523-7b1ceffad3d3" />
-
+<img width="360" height="360" alt="image" src="https://github.com/user-attachments/assets/c826b50e-e339-4c51-a353-ae5bf41e5b89" />
 
 Não importa onde você o acesse no sistema, você sempre estará interagindo com o mesmo objeto e os mesmos dados.
 * **Pilares da Implementação:**
