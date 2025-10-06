@@ -532,8 +532,27 @@ Nesta aula foi discutido o papel do **arquiteto de software** frente aos desafio
 
 ---
 
-## Aula 15/09 e 18/09
+## Aula 14- 15/09 e 18/09
 
 - Implementação do publisher e subscriber (tópico)
+
+---
+# Aula 16 - 15/09/2025  
+
+Nesta aula foram abordadas as **qualidades operacionais da arquitetura de software**, também conhecidas como **atributos de qualidade**, que definem o comportamento do sistema em cenários de uso real. Esses atributos garantem que a arquitetura atenda aos requisitos não funcionais, como desempenho, escalabilidade, disponibilidade e segurança.  
+
+## Tópicos Principais  
+
+### Qualidades Operacionais  
+
+| **Característica** | **Descrição** |
+|----------------------|----------------|
+| **Disponibilidade** | Mede o tempo em que o sistema permanece acessível e funcional. Em aplicações 24/7, é essencial garantir mecanismos de recuperação rápida após falhas. |
+| **Continuidade** | Refere-se à capacidade do sistema de se restabelecer após desastres ou interrupções graves. |
+| **Desempenho** | Avalia a capacidade de resposta do sistema, incluindo testes de carga, análise de picos e tempo de processamento. |
+| **Recuperabilidade** | Define a rapidez com que o sistema volta a operar após falhas, influenciando políticas de backup e redundância. |
+| **Confiabilidade / Segurança** | Analisa a resistência a falhas críticas e o impacto financeiro ou operacional que uma interrupção pode causar. |
+| **Robustez** | Indica a habilidade do sistema de lidar com condições adversas (falhas de energia, rede, hardware, etc.). |
+| **Escalabilidade** | Mede a capacidade do sistema de crescer de forma eficiente à medida que aumenta o número de usuários ou requisições. |
 
 ---
