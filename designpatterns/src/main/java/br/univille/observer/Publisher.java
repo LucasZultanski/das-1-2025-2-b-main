@@ -19,12 +19,18 @@ public class Publisher {
         subscribers.add(assinante);
     }
 
+    public void unsubscribe(Subscriber assinante) {
+        subscribers.remove(assinante);
+    }
+
     public void notifySubscribers(){
         for(Subscriber umAssinante: subscribers){
             umAssinante.update(mainState);
         }
     }
     
-
+    public int getSubscriberCount() {
+        return subscribers.size();
+    }
 
 }
