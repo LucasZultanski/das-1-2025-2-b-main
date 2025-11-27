@@ -633,3 +633,70 @@ Nesta aula o foco saiu do modelo baseado em **Tópicos (fan-out)** e migrou para
 - **Persistência** — mensagens permanecem na fila até serem processadas.  
 - **Desacoplamento** — o produtor não depende do consumidor estar online.  
 
+---
+# Aula 19 - 06/10/2025
+
+A aula foi dedicada ao aprofundamento teórico via estudo dirigido, com foco na leitura e análise das **características arquiteturais** (requisitos não funcionais) e revisitando conceitos de trade-offs e qualidade estrutural de software.
+
+## Tópicos Principais
+
+### Estudo de Características Arquiteturais
+- Baseada no Capítulo 4 do livro **Fundamentos de Arquitetura de Software**.
+- Análise dos quadros e tabelas como síntese das qualidades operacionais e estruturais.
+- Reforço da diferença entre **arquitetura, design e codificação**.
+
+---
+
+### Definição Formal de Características da Arquitetura
+
+Uma característica arquitetural deve atender **três critérios**:
+
+| Critério | Significado |
+|---------|-------------|
+| Consideração fora do domínio | Relaciona-se a requisitos operacionais e não funcionais. |
+| Influencia o design estrutural | Pode exigir módulos, serviços ou camadas específicas. |
+| Essencial ao sucesso do sistema | Nem todas devem ser atendidas — priorização é essencial. |
+
+> Ex.: segurança só se torna característica arquitetural quando implica design estrutural especial (módulo dedicado, criptografia aplicada em toda a solução, segregação de componentes).
+
+---
+
+### Arquitetura Implícita vs Explícita
+- Características **implícitas**: não aparecem nos requisitos, mas são essenciais (ex.: disponibilidade, confiabilidade, segurança).
+- Características **explícitas**: documentadas formalmente nos requisitos ou contratos de software.
+- Cabe ao arquiteto identificar as implícitas e torná-las visíveis no projeto.
+
+---
+
+### Categorias de Características da Arquitetura
+
+#### 1. **Operacionais**
+- Disponibilidade │ Continuidade │ Desempenho │ Recuperabilidade  
+- Confiabilidade │ Robustez │ Escalabilidade
+
+#### 2. **Estruturais**
+- Configuração │ Extensibilidade │ Reutilização │ Portabilidade  
+- Manutenção │ Localização │ Suporte │ Atualização │ Instalação
+
+#### 3. **Transversais**
+- Segurança │ Autenticação │ Autorização │ Privacidade  
+- Acessibilidade │ Armazenamento │ Legalidade │ Usabilidade  
+- Interoperabilidade │ Compatibilidade │ Aprendizado  
+- Adequação funcional (Totalidade, Correção, Adequação das funções)
+
+> Cada empresa interpreta e prioriza essas características de forma diferente — não existe lista universal definitiva.
+
+---
+
+### Trade-offs e Arquitetura "Menos Pior"
+- Nenhum sistema consegue maximizar todos os atributos ao mesmo tempo.
+- A arquitetura ideal é **equilibrada**, não perfeita.
+- Ex.: mais segurança → mais criptografia → maior custo de processamento → menor desempenho.
+
+**Conclusão:**  
+O objetivo do arquiteto não é criar a arquitetura ideal, mas a **menos pior possível** — aquela que equilibra custo, risco e valor entregue.  
+Arquitetura deve ser iterativa, evolutiva e ajustável, alinhada ao pensamento ágil:  
+> Errar rápido, corrigir rápido, evoluir sempre.
+
+
+
