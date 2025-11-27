@@ -556,3 +556,58 @@ Nesta aula foram abordadas as **qualidades operacionais da arquitetura de softwa
 | **Escalabilidade** | Mede a capacidade do sistema de crescer de forma eficiente à medida que aumenta o número de usuários ou requisições. |
 
 ---
+# Aula 17 - 18/09/2025
+
+Nesta aula foi implementado o modelo de mensageria usando o padrão **Publish/Subscribe (Fan-out)** no **Azure Service Bus**, com foco no comportamento do **Subscriber (Assinante)**. Foram discutidas também decisões arquiteturais relacionadas a confiabilidade, resiliência e conectividade em ambientes distribuídos.
+
+## Tópicos Principais
+
+### Arquitetura Publish/Subscribe (Fan-out)
+- Modelo **um-para-muitos**: diferente de uma Fila tradicional (ponto a ponto), um **Tópico** permite distribuir a mesma mensagem para diversos consumidores.
+- **Subscriptions (Assinaturas):**
+  - Cada serviço possui sua própria assinatura.
+  - Uma mensagem publicada é **replicada para todas as assinaturas**, garantindo entrega independente a cada consumidor.
+
+---
+
+### Confiabilidade e Modos de Consumo
+
+| Modo | Comportamento |
+|------|---------------|
+| **PeekLock (Espiadinha)** | A mensagem é lida e bloqueada temporariamente, mas não removida até confirmação. |
+| **ReceiveAndDelete** | A mensagem é removida automaticamente assim que lida (menos seguro). |
+
+- Na aula foi adotado **PeekLock** por questões de **resiliência**.
+- Se o serviço falhar durante o processamento, a mensagem **retorna para a fila** após expirar o lock.
+- A remoção definitiva ocorre apenas com **Acknowledge (`complete()`)** — evitando perda de dados.
+
+---
+
+### Decisões Tecnológicas e Protocolos
+
+- Conexão configurada usando **AMQP sobre WebSockets**.
+- Justificativa:
+  - WebSockets trafegam pela porta **443 (HTTPS)**.
+  - Contorna bloqueios de firewall comuns em portas específicas de mensageria.
+  - Aumenta a confiabilidade de comunicação em redes corporativas.
+
+---
+
+### Padrões de Design e Implementação Utilizados
+
+- **Builder Pattern**
+  - Usado para construir o cliente de mensageria (ServiceBusClientBuilder) de forma fluida e configurável.
+
+- **Programação Funcional com Lambdas**
+  - Comportamento de processamento da mensagem é injetado via função callback.
+  - O Azure gerencia o recebimento assíncrono e o ciclo de vida do processamento.
+
+---
+
+### Conclusão
+- A arquitetura com **Tópico + Assinaturas** cria um fluxo de fan-out eficiente.
+- O uso de PeekLock + Acknowledge garante **resiliência e integridade das mensagens**.
+- Lambdas e Builder Pattern tornam o código mais limpo, configurável e desacoplado.
+```
+
+
