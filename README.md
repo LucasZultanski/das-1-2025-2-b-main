@@ -693,7 +693,7 @@ Uma característica arquitetural deve atender **três critérios**:
 - A arquitetura ideal é **equilibrada**, não perfeita.
 - Ex.: mais segurança → mais criptografia → maior custo de processamento → menor desempenho.
 
-**Conclusão:**  
+### Conclusão 
 O objetivo do arquiteto não é criar a arquitetura ideal, mas a **menos pior possível** — aquela que equilibra custo, risco e valor entregue.  
 Arquitetura deve ser iterativa, evolutiva e ajustável, alinhada ao pensamento ágil:  
 > Errar rápido, corrigir rápido, evoluir sempre.
@@ -771,7 +771,7 @@ Fluxos resumidos:
 
 ---
 
-**Conclusão:** 
+### Conclusão
 - O Circuit Breaker é fundamental para resiliência em sistemas distribuídos.  
 - Ele protege o ecossistema de chamadas falhas repetidas, preservando recursos.  
 - Devem ser definidos limites, timeouts realistas, monitoramento e fallback.  
@@ -846,8 +846,7 @@ Anti-padrão caracterizado por:
   https://integrada.minhabiblioteca.com.br/reader/books/9788550819754/epubcfi/6/26[%3Bvnd.vst.idref%3Dcap4.xhtml]!/4/2/20/2%4050:60
 
 ---
-
-**Conclusão:** 
+### Conclusão
 - **CQRS** resolve gargalos ao separar leitura e escrita em modelos diferentes.  
 - Evita deadlocks, bloqueios e incompatibilidades estruturais.  
 - A aula reforçou também o entendimento da evolução das arquiteturas e do risco de cair no anti-padrão **Big Ball of Mud**.  
