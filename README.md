@@ -609,5 +609,27 @@ Nesta aula foi implementado o modelo de mensageria usando o padrão **Publish/Su
 - O uso de PeekLock + Acknowledge garante **resiliência e integridade das mensagens**.
 - Lambdas e Builder Pattern tornam o código mais limpo, configurável e desacoplado.
 
+# Aula 18 - 02/10/2025
 
+Nesta aula o foco saiu do modelo baseado em **Tópicos (fan-out)** e migrou para o padrão de **Filas (Queues)** no Azure Service Bus. Foi implementada a comunicação assíncrona no modelo **Produtor → Consumidor**, com ênfase em ordenação, tolerância a falhas e resiliência operacional.
+
+## Tópicos Principais
+
+### Queue vs. Topic
+
+| Característica | Topic (1:N) | Queue (1:1) |
+|----------------|-------------|-------------|
+| Entrega        | Mensagem enviada para múltiplos consumidores | Apenas **um** consumidor recebe e processa |
+| Modelo         | Publicador distribui para várias assinaturas | Comunicação ponto-a-ponto **Produtor → Consumidor** |
+| Uso ideal      | Broadcast, notificações, fan-out | Processamento exclusivo e sequencial |
+
+- A fila segue o padrão **Competing Consumers**: vários consumidores podem disputar a mesma fila, mas **apenas um processa cada mensagem**.
+
+---
+
+### Propriedades da Fila (Queue)
+
+- **FIFO** — mensagens processadas na ordem em que chegam.  
+- **Persistência** — mensagens permanecem na fila até serem processadas.  
+- **Desacoplamento** — o produtor não depende do consumidor estar online.  
 
