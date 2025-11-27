@@ -608,6 +608,6 @@ Nesta aula foi implementado o modelo de mensageria usando o padrão **Publish/Su
 - A arquitetura com **Tópico + Assinaturas** cria um fluxo de fan-out eficiente.
 - O uso de PeekLock + Acknowledge garante **resiliência e integridade das mensagens**.
 - Lambdas e Builder Pattern tornam o código mais limpo, configurável e desacoplado.
-```
+
 
 
