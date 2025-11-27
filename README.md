@@ -698,5 +698,160 @@ O objetivo do arquiteto não é criar a arquitetura ideal, mas a **menos pior po
 Arquitetura deve ser iterativa, evolutiva e ajustável, alinhada ao pensamento ágil:  
 > Errar rápido, corrigir rápido, evoluir sempre.
 
+# Aula 20 - 09/10/2025
+
+A aula introduziu o **Padrão Circuit Breaker**, um mecanismo essencial para resiliência em sistemas distribuídos. Esse padrão evita falhas em cascata quando um serviço dependente está lento, indisponível ou instável, interrompendo temporariamente as chamadas e permitindo recuperação controlada.
+
+## Tópicos Principais
+
+### O Problema em Sistemas Distribuídos
+- Sistemas distribuídos operam com chamadas entre serviços (A → B → C...).
+- Se o serviço B estiver lento ou fora do ar, chamadas contínuas do serviço A:
+  - consomem recursos desnecessariamente
+  - aumentam latência
+  - podem gerar falhas em cadeia na aplicação inteira
+- É necessário um mecanismo que interrompa tentativas sucessivas quando falhas se repetem.
+
+---
+
+### Padrão Circuit Breaker (Disjuntor)
+**Objetivo:** impedir repetição infinita de chamadas que provavelmente falharão.
+
+Opera como um **disjuntor elétrico**, abrindo o circuito para proteger o sistema.
+
+#### Estados da Máquina
+
+| Estado | Funcionamento |
+|-------|---------------|
+| **Fechado (Closed)** | Funcionamento normal. Chamadas fluem. Se falhas excedem limite → vai para Aberto. |
+| **Aberto (Open)** | Sistema “corta” as chamadas. Todas falham imediatamente. Aguarda tempo de reset. |
+| **Meio Aberto (Half-Open)** | Permite chamadas limitadas para teste. Se funcionar → fecha. Se falhar → reabre. |
+
+Benefícios:
+- Prevenção de falha em cascata  
+- Uso mais inteligente de recursos  
+- Recuperação controlada e gradual
+
+---
+
+### Notas Operacionais Importantes
+- Pode ser combinado com **Retry**, desde que respeite o estado do disjuntor.
+- Pode retornar valores padrão para manter o sistema funcional (degradação graciosa).
+- Limiares e tempos de timeout devem ser ajustados com base em monitoramento real.
+
+**Boas práticas:**
+- Log + tracing distribuído
+- Dashboards de estado
+- Opção de reset manual
+- Testes de recuperação e fallback
+
+---
+
+### Quando Usar
+- Em chamadas para serviços remotos instáveis.
+- Para evitar sobrecarga de APIs externas ou bancos distribuídos.
+- Quando SLAs exigem resposta rápida mesmo sob falha.
+
+### Quando NÃO Usar
+- Em chamadas locais (memória): o custo extra não compensa.
+- Quando o próprio provedor já implementa retry/resiliência nativa.
+- Ambientes que toleram falhas temporárias com DLQ (ex.: filas).
+
+---
+
+### Exemplo (Azure Cosmos DB + App Service)
+- Picos podem gerar erro **429** (limite de requisições).
+- O Circuit Breaker evita repetir chamadas e serve respostas do cache.
+- Monitoramento alerta equipe para escalar recursos.
+
+Fluxos resumidos:
+1. **Fechado** → operação normal  
+2. **Aberto** → bloqueia chamadas, resposta degradada  
+3. **Half-Open** → teste controlado, sucesso fecha o circuito  
+
+---
+
+**Conclusão:** 
+- O Circuit Breaker é fundamental para resiliência em sistemas distribuídos.  
+- Ele protege o ecossistema de chamadas falhas repetidas, preservando recursos.  
+- Devem ser definidos limites, timeouts realistas, monitoramento e fallback.  
+- A melhor arquitetura não é a perfeita, mas a que falha de forma segura.
+
+# Aula 21 - 13/10/2025
+
+A aula aprofundou o estudo de padrões arquiteturais focados em escalabilidade e desempenho, destacando o **CQRS Pattern**. Também foram revisados conceitos de evolução arquitetural e o anti-padrão *Big Ball of Mud*.
+
+## Tópicos Principais
+
+### CQRS (Command and Query Responsibility Segregation)
+
+**Definição:**  
+Padrão que separa operações de **leitura (Query)** e **escrita (Command)** usando **modelos de dados distintos**, permitindo otimização independente.
+
+### Problema (Motivação)
+Usar o mesmo modelo para ler e escrever causa:
+- **Deadlocks:** leitura e escrita bloqueando uma à outra.  
+- **Contenção de bloqueio:** múltiplas operações competindo pelo mesmo recurso.  
+- **Incompatibilidade:** escrita exige normalização; leitura exige desnormalização.  
+- **Baixa performance:** gargalos em sistemas de alta demanda.
+
+### Solução Arquitetural
+- Banco **A** otimizado para **escrita** (Commands).  
+- Banco **B** otimizado para **leitura** (Queries).  
+- O banco de leitura é atualizado **assíncrona/eventualmente**, após a escrita ser concluída.
+
+Benefícios:
+- Escalabilidade  
+- Desempenho de leitura muito superior  
+- Redução de bloqueios  
+- Segurança e controle de acesso mais granular  
+
+---
+
+## Fundamentos e Anti-Padrões
+
+### Big Ball of Mud (A Grande Bola de Lama)
+Anti-padrão caracterizado por:
+- código sem estrutura  
+- lógica espalhada  
+- ausência de arquitetura  
+- “remendos” constantes  
+- dados e estados compartilhados de forma descontrolada
+
+É o oposto de uma arquitetura modular, limpa e sustentável.
+
+---
+
+## Evolução das Arquiteturas
+
+### Arquitetura Unitária
+- Hardware + software eram uma única entidade (mainframes, embarcados).  
+- Pouca modularidade, baixo particionamento.
+
+### Cliente/Servidor
+- Separação clara entre **cliente** (interface) e **servidor** (processamento).  
+- Primeiro grande passo rumo ao particionamento.
+
+### Arquitetura Web
+- Modelo: Navegador → Servidor Web → Banco de Dados  
+- Permitiu acesso global, redesenho de responsabilidades e maior escalabilidade.
+
+---
+
+## Documentação de Referência
+- Microsoft Learn (CQRS):  
+  https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs
+
+- Livro – Fundamentos de Arquitetura de Software (Univille):  
+  https://integrada.minhabiblioteca.com.br/reader/books/9788550819754/epubcfi/6/26[%3Bvnd.vst.idref%3Dcap4.xhtml]!/4/2/20/2%4050:60
+
+---
+
+**Conclusão:** 
+- **CQRS** resolve gargalos ao separar leitura e escrita em modelos diferentes.  
+- Evita deadlocks, bloqueios e incompatibilidades estruturais.  
+- A aula reforçou também o entendimento da evolução das arquiteturas e do risco de cair no anti-padrão **Big Ball of Mud**.  
+- É um padrão essencial para sistemas modernos que exigem alto desempenho e grande volume de acessos.
+
 
 
