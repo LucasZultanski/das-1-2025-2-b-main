@@ -917,16 +917,16 @@ Benefícios:
 
 Ao migrar de monólito para distribuído, não podemos assumir condições perfeitas:
 
-1. A rede é confiável ❌  
-2. A latência é zero ❌  
-3. A largura de banda é infinita ❌  
-4. A rede é segura ❌  
-5. A topologia nunca muda ❌  
-6. Existe apenas um administrador ❌  
-7. O transporte custa zero ❌  
-8. A rede é homogênea ❌  
+1. A rede é confiável 
+2. A latência é zero 
+3. A largura de banda é infinita 
+4. A rede é segura 
+5. A topologia nunca muda 
+6. Existe apenas um administrador 
+7. O transporte custa zero
+8. A rede é homogênea 
 
-⚠ Conclusão: distribuir aumenta complexidade e custo — não é evolução automática, é decisão arquitetural.
+Conclusão: distribuir aumenta complexidade e custo — não é evolução automática, é decisão arquitetural.
 
 ---
 
