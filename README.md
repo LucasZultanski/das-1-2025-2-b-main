@@ -1026,5 +1026,49 @@ Possível solução: aplicar **camadas abertas (Open Layer)** quando não há va
 - O anti-padrão **Architecture Sinkhole** surge quando camadas existem, mas não agregam valor.  
 - Boa para começar — mas tende a perder agilidade conforme o sistema cresce.
 
+# Aula 24 - 20/10/2025  
+**Livro-base:** Fundamentos da Arquitetura de Software – Capítulo 11
+
+Esta aula apresentou o estilo arquitetural **Pipeline (Pipes and Filters)**, mostrando como dados podem fluir sequencialmente entre componentes independentes. Também foram vistos exemplos práticos com **Node-RED** e pipelines no terminal Linux para reforçar a aplicação do conceito.
+
+---
+
+## Tópicos Principais
+
+### Arquitetura Pipeline (Pipes and Filters)
+**Conceito:**  
+O sistema é dividido em filtros encadeados, onde a saída de um componente se torna a entrada do próximo.  
+Baseia-se no modelo **stdin → processamento → stdout**.
+
+Componentes essenciais:
+
+| Componente | Função |
+|-----------|--------|
+| **Pipes (canais)** | Transportam dados entre filtros (podem ter buffers) |
+| **Filtros** | Unidades de processamento independentes, geralmente *stateless* |
+
+---
+
+### Tipos de Filtros
+
+| Tipo | Responsabilidade | Exemplo prático |
+|------|------------------|----------------|
+| **Produtor (Source)** | Apenas gera dados | Sensores, leitura de arquivos |
+| **Transformador** | Modifica e envia para frente | `tr a-z A-Z` |
+| **Verificador (Tester)** | Filtra/valida o fluxo | `grep` |
+| **Consumidor (Sink)** | Termina o pipeline | Banco, arquivo, visualização |
+
+---
+
+## Ferramentas e Aplicação Prática
+
+### Node-RED
+Ferramenta visual baseada em fluxos, ideal para IoT, eventos e automação.  
+Descrita como um *"Scratch super-potente para sistemas distribuídos"*.
+
+**Execução via Docker**
+```bash
+docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red
+docker rm mynodered  # remover
 
 
