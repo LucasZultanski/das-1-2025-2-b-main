@@ -852,5 +852,97 @@ Anti-padrão caracterizado por:
 - A aula reforçou também o entendimento da evolução das arquiteturas e do risco de cair no anti-padrão **Big Ball of Mud**.  
 - É um padrão essencial para sistemas modernos que exigem alto desempenho e grande volume de acessos.
 
+# Aula 22 - 16/10/2025
+
+A aula explorou padrões de resiliência com foco no **Retry Pattern**, apresentou a evolução histórica dos estilos arquiteturais até microsserviços, introduziu o **Dapr** como solução moderna para aplicações distribuídas e discutiu os desafios e falácias inerentes à computação distribuída com base no livro *Software Architecture – The Hard Parts*.
+
+---
+
+## Tópicos Principais
+
+### Retry Pattern (Retentativa)
+Complementando a aula anterior sobre Circuit Breaker, foi apresentado o **Retry Pattern**, usado quando uma operação falha de forma temporária.
+
+**Objetivo:** repetir uma chamada que falhou assumindo que a falha é transitória.
+
+| Estratégia | Descrição |
+|-----------|-----------|
+| Try and Cancel | Tenta apenas uma vez e desiste. |
+| Immediate Retry | Repete imediatamente (risco de sobrecarregar o serviço). |
+| Retry After Delay (Exponential Backoff) | Atrasos crescentes entre as tentativas: 1s → 2s → 4s → 8s… (mais confiável). |
+
+⚠ Risco discutido: **Throttling** – retentativas constantes podem piorar o cenário, exigindo backoff e limite de tentativas.
+
+---
+
+## Evolução das Arquiteturas
+
+### Linha temporal resumida
+
+| Era | Características |
+|-----|-----------------|
+| Monólito | Código unificado, deploy único, banco único. Mais simples para iniciar. |
+| 3 Camadas | Banco industrial + Aplicação + Front-end (HTML/JS). |
+| CORBA / DCOM (Anos 90) | Primeiras tentativas de comunicação distribuída. |
+| Microsserviços | Serviços independentes, bancos separados, times autônomos. |
+
+**Motivação real dos microsserviços** → Escalabilidade organizacional e manutenção, não apenas performance.
+
+---
+
+### Strangler Fig Pattern
+Padrão para migração gradual de monólitos.
+
+- Cria novos serviços ao redor do sistema antigo.
+- Cada funcionalidade migrada substitui parte do monólito.
+- Com o tempo, o sistema legado pode ser **“estrangulado”** até desaparecer.
+
+---
+
+## Dapr — Distributed Application Runtime
+
+Ferramenta moderna para simplificar desenvolvimento distribuído.
+
+**Sidecar Pattern:** o Dapr roda ao lado da aplicação principal.  
+A aplicação comunica com o Dapr → o Dapr acessa Redis, Service Bus, SQS, Secret Store etc.
+
+Benefícios:
+- Remove acoplamento com infraestrutura específica
+- Facilita integração com múltiplos provedores
+- Ideal para microsserviços e arquitetura orientada a eventos
+
+---
+
+## As 8 Falácias da Computação Distribuída
+
+Ao migrar de monólito para distribuído, não podemos assumir condições perfeitas:
+
+1. A rede é confiável ❌  
+2. A latência é zero ❌  
+3. A largura de banda é infinita ❌  
+4. A rede é segura ❌  
+5. A topologia nunca muda ❌  
+6. Existe apenas um administrador ❌  
+7. O transporte custa zero ❌  
+8. A rede é homogênea ❌  
+
+⚠ Conclusão: distribuir aumenta complexidade e custo — não é evolução automática, é decisão arquitetural.
+
+---
+
+## Desafios Adicionais
+
+- **Observabilidade** → Logs distribuídos requerem ferramentas como Splunk, Datadog, Jaeger.  
+- **Transações Distribuídas** → ACID não funciona entre serviços. Adotam-se **Sagas** e **consistência eventual**.  
+- **Manutenção de Contratos** → Versionamento de APIs se torna crítico entre times diferentes.
+
+---
+
+### Conclusão
+- Retry Pattern complementa Circuit Breaker e exige backoff para evitar sobrecarga.  
+- A evolução arquitetural mostrou a transição natural do monólito → distribuído → microsserviços.  
+- Dapr simplifica comunicação de serviços via Sidecar Pattern.  
+- As 8 Falácias lembram que rede **é o problema**.  
+- Observabilidade, transações e contratos se tornam desafios críticos em ambientes distribuídos.
 
 
