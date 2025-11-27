@@ -1070,5 +1070,177 @@ Descrita como um *"Scratch super-potente para sistemas distribuídos"*.
 ```bash
 docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red
 docker rm mynodered  # remover
+```
+---
+# Aula 25 - 03/11/2025  
+**Livro-base:** Fundamentos da Arquitetura de Software – Capítulo 12
+
+A aula retomou a revisão prática sobre pipeline de streaming e introduziu o estilo arquitetural **Microkernel (Plug-in Architecture)** — muito utilizado em softwares extensíveis, customizáveis e montados em torno de um núcleo estável com módulos opcionais.
+
+---
+
+## Tópicos Principais
+
+### Arquitetura Microkernel (Plug-in)
+
+**Definição:**  
+Estilo monolítico formado por um **núcleo central (core)** e extensões **plugáveis (plug-ins)**. O sistema básico funciona mesmo sem plug-ins, e cada módulo adicional expande suas capacidades sem alterar o núcleo.
+
+**Onde utilizar:**
+- Softwares distribuídos como produto (ERP, seguros, automação comercial)
+- Sistemas que mudam conforme cliente/região (ex.: impostos por estado)
+- Aplicações que exigem extensões independentes e atualização modular
+
+**Exemplos reais:**
+- IDEs (VS Code, Eclipse)
+- Jenkins e ferramentas de CI/CD
+- Navegadores Web (extensões)
+- Sistemas ERP e plataformas SaaS
+
+---
+
+## Topologia e Componentes
+
+### 1. Sistema Central (Kernel/Core)
+- Contém apenas funcionalidades mínimas essenciais
+- O fluxo lógico principal reside aqui
+- Regras de negócio específicas não ficam no core; são delegadas aos plug-ins
+
+Benefícios: núcleo leve facilita manutenção, aumenta estabilidade e melhora testabilidade.
+
+### 2. Plug-ins
+- Módulos autônomos capazes de estender funcionalidades
+- Podem ser adicionados ou removidos sem afetar outros plug-ins
+- Comunicação com o core ocorre via contratos bem definidos
+
+**Modos de Implantação:**
+
+| Tipo | Característica |
+|------|----------------|
+| Compile-time | Requer recompilar/reimplantar o sistema |
+| Runtime (Hot-Deploy) | Plug-ins carregados dinamicamente sem parar o sistema |
+
+---
+
+## Decisões de Design
+
+### Armazenamento de Dados
+- O banco principal pertence ao núcleo
+- Plug-ins devem possuir armazenamento próprio quando necessário para evitar acoplamento ao banco central
+
+### Registro + Contratos (Registry & Contracts)
+- O núcleo mantém um registro dos plug-ins disponíveis
+- Comunicação é feita por contratos formais: interfaces, REST APIs, JSON/XML, integrações por mensagens
+
+---
+
+## Atributos de Qualidade – Trade-offs
+
+| Característica | Classificação | Observação |
+|---------------|--------------|------------|
+| Simplicidade | Alta | Núcleo pequeno e compreensível |
+| Manutenção | Alta | Alterações isoladas em plug-ins |
+| Modularidade/Extensibilidade | Alta | Adição de recursos via plug-ins |
+| Testabilidade | Média/Alta | Plug-ins testáveis isoladamente |
+| Performance | Média | Pode otimizar desabilitando plug-ins |
+| Escalabilidade | Baixa | É monolítico; difícil escalar partes individualmente |
+| Tolerância a Falhas | Baixa | Falha no core derruba todo o ecossistema |
+
+---
+
+### Resumo Final
+- A Arquitetura Microkernel é monolítica, porém altamente extensível.
+- Núcleo estável com plug-ins adicionáveis gera flexibilidade e customização.
+- Ideal para produtos configuráveis, porém com baixa escalabilidade.
+- Regras específicas devem viver nos plug-ins, preservando o core simples.
+
+# Aula 25 - 03/11/2025  
+**Livro-base:** Fundamentos da Arquitetura de Software – Capítulo 12
+
+A aula iniciou com a revisão da atividade anterior (pipeline de streaming de desenho) e em seguida apresentou o estilo arquitetural **Microkernel (Plug-in Architecture)**, muito utilizado em produtos de software que exigem extensibilidade, customização por cliente e evolução contínua sem necessidade de modificar o núcleo principal do sistema.
+
+---
+
+## Tópicos Principais
+
+### Estilo de Arquitetura Microkernel (Plug-in)
+
+**Definição:**  
+Arquitetura monolítica organizada em dois blocos fundamentais:
+
+1. **Core (Núcleo/Sistema Central)**  
+2. **Plug-ins (Módulos de Extensão)**
+
+Os plug-ins expandem o comportamento do sistema sem alterar o núcleo, garantindo flexibilidade e menor impacto em manutenção.
+
+### Cenários de Uso
+- Softwares distribuídos como produto instalável  
+- Sistemas com regras variáveis por região, empresa ou legislação  
+- Ambientes que exigem extensões independentes sem recompilar o core
+
+### Exemplos reais
+- IDEs: Eclipse, VS Code  
+- Ferramentas de CI/CD como Jenkins  
+- Navegadores Web com extensões  
+- Plataformas ERP e setores de seguros
+
+---
+
+## Topologia e Componentes
+
+### 1. Sistema Central (Kernel/Core)
+- Contém apenas o essencial para funcionamento do software  
+- Não deve carregar regras complexas ou específicas de clientes  
+- Mantê-lo pequeno aumenta estabilidade, testabilidade e previsibilidade
+
+### 2. Plug-ins
+- Módulos autônomos que adicionam funcionalidade ao sistema  
+- Podem ser adicionados/removidos sem afetar o núcleo  
+- Adequados para personalização e evolução contínua do produto
+
+**Modos de implantação:**
+
+| Tipo | Característica |
+|------|----------------|
+| Compile-time | Exige recompilação e redeploy do sistema |
+| Runtime (Hot Deploy) | Plug-ins carregados dinamicamente, sem derrubar a aplicação |
+
+---
+
+## Decisões de Design
+
+### Armazenamento de Dados
+- O banco principal pertence ao Core  
+- Plug-ins devem ter armazenamento próprio se possuírem regras isoladas  
+- Reduz acoplamento e impacto no modelo de dados base
+
+### Registro & Contratos (Registry + Contracts)
+- O Core mantém o registro de plug-ins instalados/ativos  
+- Interação ocorre via contratos bem definidos:  
+  - Interfaces  
+  - APIs REST  
+  - JSON/XML  
+
+A padronização dos contratos garante previsibilidade e isolamento entre módulos.
+
+---
+
+## Atributos de Qualidade (Trade-offs)
+
+| Característica | Classificação | Observação |
+|---------------|--------------|------------|
+| Simplicidade | Alta | Núcleo pequeno e compreensível |
+| Manutenção | Alta | Alterações isoladas nos plug-ins |
+| Modularidade/Extensibilidade | Alta | Novas funções adicionadas sem alterar o core |
+| Testabilidade | Média/Alta | Plug-ins podem ser testados em isolamento |
+| Performance | Média | Depende da quantidade de plug-ins ativos |
+| Escalabilidade | Baixa | Estrutura monolítica limita escalonamento individual |
+| Tolerância a Falhas | Baixa | Se o core falha, todo o sistema falha junto |
+
+---
+
+### Conclusão
+
+A Arquitetura Microkernel organiza o sistema em torno de um núcleo mínimo, extensível por plug-ins independentes. É ideal para produtos que precisam adaptar regras e funcionalidades sem afetar o restante da aplicação. Traz alta modularidade e manutenção simples, mas possui limitações em escalabilidade e dependência total do core.
 
 
