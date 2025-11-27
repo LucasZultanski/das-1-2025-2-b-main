@@ -30,7 +30,7 @@ public class Subscriber {
                 context.complete();
             })
             .processError(context -> {
-                System.out.println("F");
+                System.out.println("Erro");
             })
             .buildProcessorClient();
         

@@ -2,46 +2,37 @@ package br.univille.observer;
 
 public class Cliente {
     public static void main(String[] args) {
-        System.out.println("=== Observer Pattern: Grupo de Família WhatsApp ===\n");
+        System.out.println("Grupo criado.");
 
-        // Criar o publicador (grupo da família)
         var grupoFamilia = new Publisher();
-        System.out.println("✓ Grupo criado: 'Família'\n");
 
-        // Criar os assinantes (membros da família)
-        var zezinho = new ConcreteSubscriber("Zezinho");
-        var huguinho = new ConcreteSubscriber("Huguinho");
-        var tia = new ConcreteSubscriber("Tia Maria");
-        
-        System.out.println("✓ Membros criados: Zezinho, Huguinho, Tia Maria\n");
+        var zezinho = new ConcreteSubscriber("CLIETO");
+        var huguinho = new ConcreteSubscriber("joão");
+        var tia = new ConcreteSubscriber("pedrin");
 
-        // Adicionar membros ao grupo
-        System.out.println(">>> Adicionando membros ao grupo...");
+        System.out.println("Membros: CLIETO, joão, pedrin");
+
         grupoFamilia.subscribe(zezinho);
         grupoFamilia.subscribe(huguinho);
         grupoFamilia.subscribe(tia);
-        System.out.println("✓ Total de membros: " + grupoFamilia.getSubscriberCount() + "\n");
+        System.out.println("Total de membros: " + grupoFamilia.getSubscriberCount());
 
-        // Primeira mensagem
-        System.out.println(">>> Mãe enviando mensagem...");
-        grupoFamilia.setMainState("BOM DIAAA ❤️❤️❤️");
+        System.out.println("Mãe: oi");
+        grupoFamilia.setMainState("oi");
         grupoFamilia.notifySubscribers();
         System.out.println();
 
-        // Segunda mensagem
-        System.out.println(">>> Mãe enviando segunda mensagem...");
-        grupoFamilia.setMainState("Quem quer café? ☕");
+        System.out.println("Mãe: almoço 13h");
+        grupoFamilia.setMainState("almoço 13h");
         grupoFamilia.notifySubscribers();
         System.out.println();
 
-        // Remover um assinante
-        System.out.println(">>> Huguinho saindo do grupo...");
+        System.out.println("joão saiu.");
         grupoFamilia.unsubscribe(huguinho);
-        System.out.println("✓ Total de membros: " + grupoFamilia.getSubscriberCount() + "\n");
+        System.out.println("Total de membros: " + grupoFamilia.getSubscriberCount());
 
-        // Mensagem depois que um saiu
-        System.out.println(">>> Mãe enviando terceira mensagem...");
-        grupoFamilia.setMainState("Almoço pronto! Venham comer! 🍽️");
+        System.out.println("Mãe: almoço pronto");
+        grupoFamilia.setMainState("almoço pronto");
         grupoFamilia.notifySubscribers();
     }
 }

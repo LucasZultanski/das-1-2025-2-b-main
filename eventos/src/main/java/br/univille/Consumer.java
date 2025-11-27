@@ -26,7 +26,7 @@ public class Consumer {
                 context.complete();
             })
             .processError(context -> {
-                System.out.println("Deu ruim");
+                System.out.println("Erro");
             })
             .buildProcessorClient();
         
