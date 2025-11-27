@@ -945,4 +945,86 @@ Conclusão: distribuir aumenta complexidade e custo — não é evolução autom
 - As 8 Falácias lembram que rede **é o problema**.  
 - Observabilidade, transações e contratos se tornam desafios críticos em ambientes distribuídos.
 
+# Aula 23 - 20/10/2025  
+**Livro-base:** *Fundamentos da Arquitetura de Software – Capítulo 10*
+
+A aula retomou um dos estilos arquiteturais mais tradicionais e predominantes no mercado: **Arquitetura em Camadas (N-Tier / Layered Architecture)**. Após discussões de microsserviços, padrões de resiliência e computação distribuída, voltamos à estrutura mais comum e simples utilizada no desenvolvimento de sistemas monolíticos.
+
+---
+
+## Tópicos Principais
+
+### Arquitetura em Camadas (N-Tier)
+**Definição:**  
+Estilo arquitetural monolítico, organizado tecnicamente em camadas horizontais. É o padrão mais adotado devido à familiaridade, simplicidade e baixo custo de implementação.
+
+**Características-chave:**
+- Fácil aprendizado e adoção por equipes
+- Estruturada por função técnica, não por domínio de negócio
+- Ideal para projetos pequenos ou em fase inicial
+
+### Lei de Conway
+> "O software reflete a estrutura de comunicação da organização que o desenvolve."
+
+- Equipes divididas por especialidade (Frontend, Backend, Banco, QA) → geram naturalmente arquiteturas em camadas.
+- Quando a empresa muda sua estrutura de times, a arquitetura tende a mudar junto.
+
+---
+
+## Topologia e Separação de Responsabilidades
+Na Arquitetura em Camadas, cada camada possui um papel próprio (**Separation of Concerns**).  
+Um módulo de domínio (ex.: Cliente) atravessa todas elas.
+
+| Camada | Função |
+|--------|--------|
+| **Apresentação** | Interface com o usuário |
+| **Negócio / Comercial** | Regras de negócio e validações |
+| **Persistência** | Repositórios e acesso a dados |
+| **Banco de Dados** | Armazenamento físico e tabelas |
+
+**Trade-off:** mudanças simples no domínio podem exigir modificações em múltiplas camadas, diminuindo **agilidade**.
+
+---
+
+## Layers of Isolation (Camadas Fechadas vs Abertas)
+
+| Tipo | Funcionamento | Vantagem | Risco |
+|------|---------------|----------|-------|
+| **Closed Layer** | Cada chamada deve passar para a camada imediatamente inferior | Melhor isolamento e organização | Mais overhead e rigidez |
+| **Open Layer** | Permite pular camadas quando necessário | Reduz burocracia e ganho de performance | Pode gerar acoplamento caótico |
+
+---
+
+## Anti-Padrão: Architecture Sinkhole
+Ocorre quando as camadas **não agregam valor**, funcionando apenas como pass-through.
+
+Sintomas:
+- Controller → Service → Repository → DB, mas sem lógica no meio
+- Camadas existem só porque "o padrão exige"
+- Aumenta latência e complexidade sem benefício real
+
+Possível solução: aplicar **camadas abertas (Open Layer)** quando não há valor real em manter isolamento estrito.
+
+---
+
+## Tabela de Características Arquiteturais
+
+| Atributo | Classificação | Justificativa |
+|---------|--------------|---------------|
+| Simplicidade | **Alta** | Fácil de entender e começar |
+| Custo | **Baixo** | Pouca infra e curva de adoção menor |
+| Testabilidade | **Média/baixa** | Acoplamento pode tornar testes lentos |
+| Agilidade | **Baixa** | Mudanças atravessam várias camadas |
+| Escalabilidade | **Baixa** | Escala-se o monólito como um todo |
+
+---
+
+### Conclusão
+- A arquitetura em camadas é o modelo mais utilizado por sua **simplicidade e baixo custo**.  
+- É tecnicamente organizada — não por domínio — o que limita evolução em sistemas grandes.  
+- Closed vs Open Layers definem o nível de isolamento e flexibilidade.  
+- O anti-padrão **Architecture Sinkhole** surge quando camadas existem, mas não agregam valor.  
+- Boa para começar — mas tende a perder agilidade conforme o sistema cresce.
+
+
 
